@@ -7,6 +7,7 @@ import * as bodyParser from 'body-parser';
 import loggerMiddleware from './middlewares/logger';
 const multer = require('multer');
 const fileUpload = require('express-fileupload');
+const cors = require('cors');
 
 
 const app = new App({
@@ -17,6 +18,7 @@ const app = new App({
         new UploadController(),
     ],
     middleWares: [
+        cors(),
         bodyParser.json(),
         bodyParser.urlencoded({ extended: true }),
         fileUpload(),
