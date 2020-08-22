@@ -101,7 +101,7 @@ class UploadController {
 
         if (process.env.CHOWN) {
             try {
-                await fs.chown(targetPath, parseInt(process.env.CHOWN), parseInt(process.env.CHOWN), function (error: Error) {console.error(error);});
+                await fs.chown(targetPath, parseInt(process.env.CHOWN), parseInt(process.env.CHOWN), function (error: Error) {});
             } catch (error) {
                 console.error(error);
             }
