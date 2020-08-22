@@ -2,6 +2,15 @@ import * as express from 'express'
 import { Request, Response } from 'express'
 const path = require('path');
 
+export interface MulterFile {
+    name: string;
+    key: string;
+    path: string;
+    mimetype: string;
+    originalname: string;
+    size: number;
+    mv: (path: string) => Promise<Error>;
+}
 
 class UploadController {
     public path = '/api/v1/upload'
@@ -48,14 +57,48 @@ class UploadController {
         return names;
     }
 
+    isAllowedFileType = (fileName: string) => {
+        const allowedTypes = process.env.ACCEPTED_FILE_TYPES ? process.env.ACCEPTED_FILE_TYPES.split(',') : [] as string[];
+        if (allowedTypes.length === 0) return true;
+
+        if (allowedTypes.includes(path.extname(fileName))) {
+            return true;
+        }
+        return false;
+    }
+
     index = (req: Request, res: Response) => {
         res.send({status: 'ready'});
     }
 
-    create = async (req: Request, res: Response) => {
+    create = async (req: Request & { files: MulterFile[] }, res: Response) => {
         if (!this.isAuthenticated(req, res)) return;
 
-        res.send({success: false, errors: [{code: 400, message: "Not implemented yet"}]});
+        if (!req.files || Object.keys(req.files).length === 0) {
+            return res.status(400).send({success: false, errors: [{code: 400, message: "No file uploaded"}]});
+        }
+
+        if (!req.files['file']) {
+            return res.status(400).send({success: false, errors: [{code: 400, message: "No file uploaded"}]});
+        }
+
+        const uploadedFile = req.files['file'];
+        if (!this.isAllowedFileType(uploadedFile.name)) {
+            return res.status(400).send({success: false, errors: [{code: 400, message: "File type is disallowed"}]});
+        }
+
+        const uploadDirs = this.getUploadDirs();
+        if (!uploadDirs[req.body.target]) {
+            return res.status(400).send({success: false, errors: [{code: 400, message: "Base path not found"}]});
+        }
+        let newFileName = new Date().getTime() + '-' + path.basename(uploadedFile.name);
+        let targetPath = path.join(uploadDirs[req.body.target], newFileName);
+        const err = await uploadedFile.mv(targetPath);
+        if (err) {
+            return res.send({success: false, errors: [{code: 400, message: `${err}`}]});
+        }
+
+        return res.send({success: true});
     }
 
     testPage = (req: Request, res: Response) => {
