@@ -91,7 +91,7 @@ class UploadController {
         if (!uploadDirs[req.body.target]) {
             return res.status(400).send({success: false, errors: [{code: 400, message: "Base path not found"}]});
         }
-        let newFileName = new Date().getTime() + '-' + path.extname(uploadedFile.name);
+        let newFileName = new Date().getTime() + path.extname(uploadedFile.name);
         let targetPath = path.join(uploadDirs[req.body.target], newFileName);
         const err = await uploadedFile.mv(targetPath);
         if (err) {
