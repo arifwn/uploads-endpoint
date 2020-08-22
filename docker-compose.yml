@@ -1,0 +1,14 @@
+version: '2'
+services:
+  amp:
+    image: docker.pkg.github.com/arifwn/uploads-endpoint/uploads:latest
+    ports:
+      - "5555:80"
+    environment:
+      HOST: upload.localhost
+      PORT: 80
+      ROOT_PATH: '/'
+      NODE_ENV: production
+      UPLOAD_KEY: SECRET
+      UPLOAD_DIRS: '{"default": "/Users/arif/projects/uploads-endpoint/uploads/"}'
+      ACCEPTED_FILE_TYPES: ".mp4,.mov"
