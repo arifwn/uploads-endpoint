@@ -1,0 +1,9 @@
+*.code-workspace
+*.log
+.DS_Store
+demo
+uploads
+node_modules
+kubernetes
+docker-compose.yml
+private-doc.md

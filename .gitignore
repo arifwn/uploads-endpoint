@@ -102,3 +102,10 @@ dist
 
 # TernJS port file
 .tern-port
+
+*.code-workspace
+.DS_Store
+dist
+docker-compose.yml
+private-doc.md
+uploads
