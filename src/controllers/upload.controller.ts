@@ -1,6 +1,7 @@
 import * as express from 'express'
 import { Request, Response } from 'express'
 const path = require('path');
+const fs = require('fs');
 
 export interface MulterFile {
     name: string;
@@ -96,6 +97,14 @@ class UploadController {
         const err = await uploadedFile.mv(targetPath);
         if (err) {
             return res.send({success: false, errors: [{code: 400, message: `${err}`}]});
+        }
+
+        if (process.env.CHOWN) {
+            try {
+                await fs.chown(targetPath, parseInt(process.env.CHOWN), parseInt(process.env.CHOWN), function (error: Error) {console.error(error);});
+            } catch (error) {
+                console.error(error);
+            }
         }
 
         return res.send({success: true, fileName: newFileName});

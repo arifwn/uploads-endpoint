@@ -12,3 +12,4 @@ services:
       UPLOAD_KEY: SECRET
       UPLOAD_DIRS: '{"default": "/Users/arif/projects/uploads-endpoint/uploads/"}'
       ACCEPTED_FILE_TYPES: ".mp4,.mov"
+      CHOWN: "33"
