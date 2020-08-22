@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Test Upload Form</title>
+  <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,minimum-scale=1,user-scalable=no">
+  <meta name="theme-color" content="#000000"/><meta name="description" content="Test Upload Form">
+  <style>
+    form > div {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Test Upload Form</h1>
+  <form action="{{apiEndpoint}}" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="_key" value="{{UPLOAD_KEY}}" />
+    <div>
+      <label>Save to</label>
+      <select name="target">
+        
+        {{#each uploadDirNames}}
+          <option value="{{this}}">{{this}}</option>
+        {{/each}}
+      </select>
+    </div>
+    <div>
+      <label>file</label>
+      <input type="file" name="file" />
+    </div>
+    <div>
+      <input type="submit" value="submit" />
+    </div>
+  </form>
+</body>
+</html>

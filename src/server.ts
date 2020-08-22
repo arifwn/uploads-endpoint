@@ -5,6 +5,7 @@ import ReadinessController from './controllers/readinesscheck.controller';
 import UploadController from './controllers/upload.controller';
 import * as bodyParser from 'body-parser';
 import loggerMiddleware from './middlewares/logger';
+const multer = require('multer');
 
 
 const app = new App({
@@ -17,6 +18,7 @@ const app = new App({
     middleWares: [
         bodyParser.json(),
         bodyParser.urlencoded({ extended: true }),
+        multer().array(),
         loggerMiddleware,
     ]
 })
