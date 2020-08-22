@@ -6,4 +6,5 @@ uploads
 node_modules
 kubernetes
 docker-compose.yml
+kubernetes.yml
 private-doc.md

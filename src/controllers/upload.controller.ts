@@ -98,7 +98,7 @@ class UploadController {
             return res.send({success: false, errors: [{code: 400, message: `${err}`}]});
         }
 
-        return res.send({success: true});
+        return res.send({success: true, fileName: newFileName});
     }
 
     testPage = (req: Request, res: Response) => {
