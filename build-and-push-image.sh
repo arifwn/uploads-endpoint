@@ -5,9 +5,9 @@ set -euxo pipefail
 yarn run build
 
 echo "building image..."
-docker build -t docker.pkg.github.com/arifwn/uploads-endpoint/uploads .
+docker buildx build -t groverweb/cloudflare-video-api-server:upload-server .
 
 echo "pushing image..."
-docker push docker.pkg.github.com/arifwn/uploads-endpoint/uploads:latest
+docker push groverweb/cloudflare-video-api-server:upload-server
 
 echo "done!"
