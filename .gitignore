@@ -109,3 +109,4 @@ dist
 kubernetes.yml
 private-doc.md
 uploads
+.envrc

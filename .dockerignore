@@ -9,3 +9,4 @@ docker-compose.yml
 kubernetes.yml
 private-doc.md
 README.md
+.envrc

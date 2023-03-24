@@ -12,4 +12,5 @@ services:
       UPLOAD_KEY: SECRET
       UPLOAD_DIRS: '{"default": "/Users/arif/projects/uploads-endpoint/uploads/"}'
       ACCEPTED_FILE_TYPES: ".mp4,.mov"
+      AUTODELETE_TIMEOUT: "3600"
       CHOWN: "33"

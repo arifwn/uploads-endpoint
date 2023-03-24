@@ -107,6 +107,15 @@ class UploadController {
             }
         }
 
+        if (process.env.AUTODELETE_TIMEOUT) {
+            let autodeleteTimeout = parseInt(process.env.AUTODELETE_TIMEOUT);
+            if (isNaN(autodeleteTimeout)) autodeleteTimeout = 3600;
+            setTimeout(() => {
+                console.log("cleaning up file", targetPath);
+                fs.unlink(targetPath, function (error: Error) {});
+            }, autodeleteTimeout*1000);
+        }
+
         return res.send({success: true, fileName: newFileName});
     }
 
